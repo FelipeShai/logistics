@@ -11,12 +11,10 @@ import java.util.UUID;
 @Component
 public class DeliveryFactoryImpl implements DeliveryFactory {
 
-    @Override
     public Delivery create(UUID orderId, UUID customerId, DeliveryAddress address) {
         return new Delivery(orderId, customerId, address);
     }
 
-    @Override
     public Delivery create(UUID id, UUID orderId, UUID customerId, UUID courierId,
                            DeliveryStatus status, DeliveryAddress address,
                            LocalDateTime createdAt, LocalDateTime deliveredAt) {

@@ -38,30 +38,25 @@ public class DeliveryRestAdapter {
     public DeliveryResponseDTO createDelivery(DeliveryRequestDTO requestDTO) {
 
         Delivery delivery = deliveryFactory.create(
-               UUID.randomUUID(),
                requestDTO.orderId(),
                requestDTO.customerId(),
-               requestDTO.courierId(),
-               requestDTO.status(),
-               requestDTO.address(),
-               LocalDateTime.now(),
-               null
+               requestDTO.address()
         );
 
         Delivery saved = createDeliveryUseCase.execute(delivery);
-        return new DeliveryResponseDTO(saved.getId(), saved.getStatus(), saved.getAddress());
+        return new DeliveryResponseDTO(saved.getId(), saved.getStatus(), saved.getAddress(), saved.getCreatedAt());
     }
 
     public Optional<DeliveryResponseDTO> getDeliveryById(UUID id) {
         return getDeliveryByIdUseCase.execute(id)
-                .map(delivery -> new DeliveryResponseDTO(delivery.getId(), delivery.getStatus(), delivery.getAddress()));
+                .map(delivery -> new DeliveryResponseDTO(delivery.getId(), delivery.getStatus(), delivery.getAddress(), delivery.getCreatedAt()));
     }
 
     public void deleteDelivery(UUID id) {
         deleteDeliveryUseCase.execute(id);
     }
 
-    public record DeliveryRequestDTO(UUID orderId, UUID customerId, UUID courierId, DeliveryStatus status, DeliveryAddress address) {}
+    public record DeliveryRequestDTO(UUID orderId, UUID customerId, DeliveryAddress address) {}
 
-    public record DeliveryResponseDTO(UUID id, DeliveryStatus status, DeliveryAddress address) {}
+    public record DeliveryResponseDTO(UUID id, DeliveryStatus status, DeliveryAddress address, LocalDateTime createdAt) {}
 }

@@ -9,7 +9,9 @@ import java.util.UUID;
 
 public interface DeliveryFactory {
     Delivery create(UUID orderId, UUID customerId, DeliveryAddress address);
+
     Delivery create(UUID id, UUID orderId, UUID customerId, UUID courierId,
                     DeliveryStatus status, DeliveryAddress address,
                     LocalDateTime createdAt, LocalDateTime deliveredAt);
+
 }

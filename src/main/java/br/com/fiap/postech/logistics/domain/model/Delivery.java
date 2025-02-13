@@ -14,12 +14,10 @@ public class Delivery {
     private final LocalDateTime createdAt;
     private LocalDateTime deliveredAt;
 
-    // Construtor sem ID (JPA gera automaticamente)
     public Delivery(UUID orderId, UUID customerId, DeliveryAddress address) {
         this(null, orderId, customerId, null, DeliveryStatus.PENDING, address, null, null);
     }
 
-    // Construtor completo
     public Delivery(UUID id, UUID orderId, UUID customerId, UUID courierId,
                     DeliveryStatus status, DeliveryAddress address,
                     LocalDateTime createdAt, LocalDateTime deliveredAt) {
@@ -56,5 +54,12 @@ public class Delivery {
         }
         this.status = DeliveryStatus.DELIVERED;
         this.deliveredAt = LocalDateTime.now();
+    }
+
+    public void updateStatus(DeliveryStatus newStatus) {
+        if (this.status == DeliveryStatus.DELIVERED) {
+            throw new IllegalStateException("Cannot change status of a delivered order.");
+        }
+        this.status = newStatus;
     }
 }

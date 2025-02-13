@@ -19,9 +19,8 @@ public class DeliveryJpaGateway implements DeliveryGateway {
     private final DeliveryEntityMapper mapper;
 
     @Override
-    @Transactional
     public Delivery save(Delivery delivery) {
-        DeliveryEntity entity = repository.findById(delivery.getId())
+        DeliveryEntity entity = repository.findByOrderId(delivery.getOrderId())
                 .orElse(null);
         if (entity == null) {
             entity = mapper.toEntity(delivery);

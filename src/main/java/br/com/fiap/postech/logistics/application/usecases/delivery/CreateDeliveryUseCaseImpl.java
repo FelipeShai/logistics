@@ -15,6 +15,9 @@ public class CreateDeliveryUseCaseImpl implements CreateDeliveryUseCase {
 
     @Override
     public Delivery execute(Delivery delivery) {
+
+//        delivery.updateStatus();
+
         return deliveryGateway.save(delivery);
     }
 }

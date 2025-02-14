@@ -1,5 +1,6 @@
 package br.com.fiap.postech.logistics.domain.factory;
 
+import br.com.fiap.postech.logistics.domain.events.AddressEvent;
 import br.com.fiap.postech.logistics.domain.model.Delivery;
 import br.com.fiap.postech.logistics.domain.model.DeliveryAddress;
 import br.com.fiap.postech.logistics.domain.model.DeliveryStatus;

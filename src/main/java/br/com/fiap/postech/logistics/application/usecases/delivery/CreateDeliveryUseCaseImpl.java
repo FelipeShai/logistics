@@ -15,9 +15,14 @@ public class CreateDeliveryUseCaseImpl implements CreateDeliveryUseCase {
 
     @Override
     public Delivery execute(Delivery delivery) {
+        return deliveryGateway.findByOrderId(delivery.getOrderId())
+                .map(existingDelivery -> updateExistingDelivery(existingDelivery, delivery))
+                .orElseGet(() -> deliveryGateway.save(delivery));
+    }
 
-//        delivery.updateStatus();
-
-        return deliveryGateway.save(delivery);
+    private Delivery updateExistingDelivery(Delivery existing, Delivery updated) {
+        existing.updateFrom(updated);
+        return deliveryGateway.save(existing);
     }
 }
+

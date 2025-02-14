@@ -6,37 +6,50 @@ import br.com.fiap.postech.logistics.infrastructure.persistence.mapper.DeliveryE
 import br.com.fiap.postech.logistics.infrastructure.persistence.repository.DeliveryRepository;
 import br.com.fiap.postech.logistics.interfaces.gateway.database.DeliveryGateway;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 import java.util.UUID;
 
+@Slf4j
 @Component
 @RequiredArgsConstructor
 public class DeliveryJpaGateway implements DeliveryGateway {
     private final DeliveryRepository repository;
     private final DeliveryEntityMapper mapper;
 
-    @Override
     public Delivery save(Delivery delivery) {
-        DeliveryEntity entity = repository.findByOrderId(delivery.getOrderId())
-                .orElse(null);
-        if (entity == null) {
-            entity = mapper.toEntity(delivery);
-        } else {
-            mapper.updateEntityFromDomain(entity, delivery);
-        }
-        return mapper.toDomain(repository.save(entity));
+        logSavingDelivery(delivery.getOrderId());
+        DeliveryEntity entity = mapper.toEntity(delivery); // Remove a verificação extra
+        DeliveryEntity savedEntity = repository.save(entity);
+        logDeliverySaved(savedEntity.getId());
+        return mapper.toDomain(savedEntity);
     }
 
     @Override
+    public Optional<Delivery> findByOrderId(UUID orderId) {
+        return repository.findByOrderId(orderId).map(mapper::toDomain);
+    }
+
     public Optional<Delivery> findById(UUID id) {
         return repository.findById(id).map(mapper::toDomain);
     }
 
-    @Override
     public void deleteById(UUID id) {
         repository.deleteById(id);
+    }
+
+    private void logSavingDelivery(UUID orderId) {
+        log.info("Class={}, Method={}, Message={}", "DeliveryJpaGateway", "save", "Saving delivery with Order ID: " + orderId);
+    }
+    private void logCreatingNewEntity() {
+        log.info("Class={}, Method={}, Message={}", "DeliveryJpaGateway", "save", "No existing delivery found. Creating new entity.");
+    }
+    private void logUpdatingExistingEntity() {
+        log.info("Class={}, Method={}, Message={}", "DeliveryJpaGateway", "save", "Existing delivery found. Updating entity.");
+    }
+    private void logDeliverySaved(UUID id) {
+        log.info("Class={}, Method={}, Message={}", "DeliveryJpaGateway", "save", "Delivery saved successfully with ID: " + id);
     }
 }

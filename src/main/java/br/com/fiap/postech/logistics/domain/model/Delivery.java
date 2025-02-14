@@ -10,7 +10,7 @@ public class Delivery {
     private final UUID customerId;
     private UUID courierId;
     private DeliveryStatus status;
-    private final DeliveryAddress address;
+    private DeliveryAddress address;
     private final LocalDateTime createdAt;
     private LocalDateTime deliveredAt;
 
@@ -62,4 +62,19 @@ public class Delivery {
         }
         this.status = newStatus;
     }
+
+    public void updateFrom(Delivery updated) {
+        if (updated == null) {
+            throw new IllegalArgumentException("Updated delivery cannot be null");
+        }
+
+        if (this.status.canBeUpdatedTo(updated.status)) {
+            this.status = updated.status;
+        }
+
+        if (!this.address.equals(updated.address)) {
+            this.address = updated.address;
+        }
+    }
+
 }

@@ -5,8 +5,6 @@ import br.com.fiap.postech.logistics.domain.model.DeliveryAddress;
 import br.com.fiap.postech.logistics.infrastructure.persistence.entity.DeliveryAddressEntity;
 import org.springframework.stereotype.Component;
 
-import java.util.UUID;
-
 @Component
 public class DeliveryAddressMapper {
 

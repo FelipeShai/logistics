@@ -17,7 +17,7 @@ public class KafkaProducerService {
     }
 
     public void sendOrderCreatedEvent(OrderCreatedEvent event) {
-        log.info("[Kafka Producer] Class={}, Method={}, Sending event to Kafka: {}", "KafkaProducerService", "sendEvent", event);
         kafkaTemplate.send("orders.created", event);
+        log.info("Class={}, Method={}, Sending event to Kafka: {}", "KafkaProducerService", "sendOrderCreatedEvent", event);
     }
 }

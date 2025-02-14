@@ -20,9 +20,11 @@ public class KafkaConsumerService {
     @Bean
     public Consumer<OrderCreatedEvent> orderCreatedProcessor() {
         return event -> {
+
             deliveryRestAdapter.createDelivery(event);
 
             log.info("Class={}, Method={}, Message received: {}", "KafkaConsumerService", "orderCreatedProcessor", event);
+
         };
     }
 }

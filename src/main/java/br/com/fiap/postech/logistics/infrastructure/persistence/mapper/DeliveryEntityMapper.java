@@ -33,7 +33,7 @@ public class DeliveryEntityMapper {
     public DeliveryEntity toEntity(Delivery delivery) {
         if (delivery == null) return null;
         return DeliveryEntity.create(
-                delivery.getId(),
+                null,
                 delivery.getOrderId(),
                 delivery.getCustomerId(),
                 delivery.getCourierId(),

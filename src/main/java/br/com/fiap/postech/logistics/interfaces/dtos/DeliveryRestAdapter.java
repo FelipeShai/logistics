@@ -3,6 +3,7 @@ package br.com.fiap.postech.logistics.interfaces.dtos;
 import br.com.fiap.postech.logistics.application.usecases.delivery.CreateDeliveryUseCase;
 import br.com.fiap.postech.logistics.application.usecases.delivery.DeleteDeliveryUseCase;
 import br.com.fiap.postech.logistics.application.usecases.delivery.GetDeliveryByIdUseCase;
+import br.com.fiap.postech.logistics.domain.events.OrderCreatedEvent;
 import br.com.fiap.postech.logistics.domain.factory.DeliveryAddressFactory;
 import br.com.fiap.postech.logistics.domain.factory.DeliveryFactory;
 import br.com.fiap.postech.logistics.domain.model.Delivery;
@@ -46,6 +47,26 @@ public class DeliveryRestAdapter {
         Delivery saved = createDeliveryUseCase.execute(delivery);
         return new DeliveryResponseDTO(saved.getId(), saved.getStatus(), saved.getAddress(), saved.getCreatedAt());
     }
+
+        public DeliveryResponseDTO createDelivery(OrderCreatedEvent event) {
+    Delivery delivery = deliveryFactory.create(
+                event.orderId(),
+                event.customerId(),
+                deliveryAddressFactory.create(
+                        null,
+                        event.address().street(),
+                        event.address().number(),
+                        event.address().complement(),
+                        event.address().district(),
+                        event.address().city(),
+                        event.address().state(),
+                        event.address().country(),
+                        event.address().postalCode()
+                )
+        );
+        Delivery saved = createDeliveryUseCase.execute(delivery);
+        return new DeliveryResponseDTO(saved.getOrderId(), saved.getStatus(), saved.getAddress(), saved.getCreatedAt());
+    };
 
     public Optional<DeliveryResponseDTO> getDeliveryById(UUID id) {
         return getDeliveryByIdUseCase.execute(id)

@@ -5,6 +5,8 @@ import br.com.fiap.postech.logistics.domain.model.DeliveryAddress;
 import br.com.fiap.postech.logistics.infrastructure.persistence.entity.DeliveryAddressEntity;
 import org.springframework.stereotype.Component;
 
+import java.util.UUID;
+
 @Component
 public class DeliveryAddressMapper {
 
@@ -32,7 +34,7 @@ public class DeliveryAddressMapper {
     public DeliveryAddressEntity toEntity(DeliveryAddress address) {
         if (address == null) return null;
         return DeliveryAddressEntity.create(
-                address.getId(),
+                null,
                 address.getStreet(),
                 address.getNumber(),
                 address.getComplement(),

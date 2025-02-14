@@ -45,8 +45,9 @@ public class DeliveryAddressEntity {
     @Version
     private Long version;
 
-    public DeliveryAddressEntity(String street, String number, String complement, String district,
+    public DeliveryAddressEntity(UUID id, String street, String number, String complement, String district,
                                  String city, String state, String country, String postalCode) {
+        this.id = id;
         this.street = street;
         this.number = number;
         this.complement = complement;
@@ -60,6 +61,6 @@ public class DeliveryAddressEntity {
     public static DeliveryAddressEntity create(UUID id, String street, String number, String complement,
                            String district, String city, String state,
                            String country, String postalCode){
-        return new DeliveryAddressEntity(street, number, complement, district, city, state, country, postalCode);
+        return new DeliveryAddressEntity(id, street, number, complement, district, city, state, country, postalCode);
     };
 }

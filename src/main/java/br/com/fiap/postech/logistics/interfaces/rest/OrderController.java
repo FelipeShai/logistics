@@ -20,12 +20,12 @@ public class OrderController {
     @PostMapping
     public ResponseEntity<String> createOrder(@RequestBody OrderCreatedEvent order) {
 
-        log.info("[Kafka Producer] Class={}, Method={}, Sending order event to Kafka: {}",
+        log.info("Class={}, Method={}, Sending order event to Kafka: {}",
                 "OrderController", "createOrder", order);
 
         kafkaProducerService.sendOrderCreatedEvent(order);
 
-        log.info("[Kafka Producer] Class={}, Method={}, Order event successfully sent: {}",
+        log.info("Class={}, Method={}, Order event successfully sent: {}",
                 "OrderController", "createOrder", order.orderId());
 
         return ResponseEntity.ok().build();

@@ -2,7 +2,6 @@ package br.com.fiap.postech.logistics.infrastructure.messaging.producer;
 
 import br.com.fiap.postech.logistics.domain.events.OrderCreatedEvent;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.cloud.stream.function.StreamBridge;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 

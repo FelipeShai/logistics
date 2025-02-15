@@ -1,4 +1,4 @@
-package br.com.fiap.postech.logistics.interfaces.dtos;
+package br.com.fiap.postech.logistics.interfaces.adapters;
 
 import br.com.fiap.postech.logistics.application.usecases.delivery.CreateDeliveryUseCase;
 import br.com.fiap.postech.logistics.domain.events.OrderCreatedEvent;
@@ -25,7 +25,7 @@ public class DeliveryEventAdapter {
         Delivery delivery = deliveryFactory.create(
                 event.orderId(),
                 event.customerId(),
-                deliveryAddressFactory.fromEvent(event.address())
+                deliveryAddressFactory.createFromEvent(event.address())
         );
         createDeliveryUseCase.execute(delivery);
     }

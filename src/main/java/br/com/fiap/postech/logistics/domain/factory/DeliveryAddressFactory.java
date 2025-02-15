@@ -11,10 +11,8 @@ public interface DeliveryAddressFactory {
                            String district, String city, String state,
                            String country, String postalCode);
 
-    DeliveryAddress fromEvent(AddressEvent event);
+    DeliveryAddress createFromEvent(AddressEvent event);
 
-    DeliveryAddress fromDTO(DeliveryAddressDTO dto);
-
-    DeliveryAddressDTO toDTO(DeliveryAddress address);
+    DeliveryAddress createFromDTO(DeliveryAddressDTO dto);
     }
 

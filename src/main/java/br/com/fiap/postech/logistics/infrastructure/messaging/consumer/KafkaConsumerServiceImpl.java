@@ -1,9 +1,7 @@
 package br.com.fiap.postech.logistics.infrastructure.messaging.consumer;
 
-import br.com.fiap.postech.logistics.application.usecases.delivery.CreateDeliveryUseCase;
 import br.com.fiap.postech.logistics.domain.events.OrderCreatedEvent;
-import br.com.fiap.postech.logistics.interfaces.dtos.DeliveryEventAdapter;
-import br.com.fiap.postech.logistics.interfaces.dtos.DeliveryRestAdapter;
+import br.com.fiap.postech.logistics.interfaces.adapters.DeliveryEventAdapter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Service;

@@ -17,7 +17,7 @@ public class DeliveryAddressFactoryImpl implements DeliveryAddressFactory {
         return new DeliveryAddress(id, street, number, complement, district, city, state, country, postalCode);
     }
 
-    public DeliveryAddress fromEvent(AddressEvent event) {
+    public DeliveryAddress createFromEvent(AddressEvent event) {
         return new DeliveryAddress(
                 UUID.randomUUID(),
                 event.street(),
@@ -30,7 +30,7 @@ public class DeliveryAddressFactoryImpl implements DeliveryAddressFactory {
                 event.postalCode()
         );
     }
-    public DeliveryAddress fromDTO(DeliveryAddressDTO dto) {
+    public DeliveryAddress createFromDTO(DeliveryAddressDTO dto) {
         return new DeliveryAddress(
                 UUID.randomUUID(),
                 dto.street(),
@@ -41,19 +41,6 @@ public class DeliveryAddressFactoryImpl implements DeliveryAddressFactory {
                 dto.state(),
                 dto.country(),
                 dto.postalCode()
-        );
-    }
-
-    public DeliveryAddressDTO toDTO(DeliveryAddress address) {
-        return new DeliveryAddressDTO(
-                address.getStreet(),
-                address.getNumber(),
-                address.getComplement(),
-                address.getDistrict(),
-                address.getCity(),
-                address.getState(),
-                address.getCountry(),
-                address.getPostalCode()
         );
     }
 }

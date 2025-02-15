@@ -3,6 +3,7 @@ package br.com.fiap.postech.logistics.infrastructure.persistence.mapper;
 import br.com.fiap.postech.logistics.domain.factory.DeliveryAddressFactory;
 import br.com.fiap.postech.logistics.domain.model.DeliveryAddress;
 import br.com.fiap.postech.logistics.infrastructure.persistence.entity.DeliveryAddressEntity;
+import br.com.fiap.postech.logistics.interfaces.dtos.DeliveryAddressDTO;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -33,6 +34,19 @@ public class DeliveryAddressMapper {
         if (address == null) return null;
         return DeliveryAddressEntity.create(
                 null,
+                address.getStreet(),
+                address.getNumber(),
+                address.getComplement(),
+                address.getDistrict(),
+                address.getCity(),
+                address.getState(),
+                address.getCountry(),
+                address.getPostalCode()
+        );
+    }
+
+    public DeliveryAddressDTO toDTO(DeliveryAddress address) {
+        return new DeliveryAddressDTO(
                 address.getStreet(),
                 address.getNumber(),
                 address.getComplement(),

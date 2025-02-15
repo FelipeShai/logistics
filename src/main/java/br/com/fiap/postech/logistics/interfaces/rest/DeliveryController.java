@@ -1,13 +1,14 @@
 package br.com.fiap.postech.logistics.interfaces.rest;
 
 import br.com.fiap.postech.logistics.application.usecases.delivery.CreateDeliveryUseCase;
-import br.com.fiap.postech.logistics.domain.model.Delivery;
-import br.com.fiap.postech.logistics.interfaces.dtos.DeliveryRestAdapter;
+import br.com.fiap.postech.logistics.interfaces.adapters.DeliveryRestAdapter;
+import br.com.fiap.postech.logistics.interfaces.dtos.DeliveryRequestDTO;
+import br.com.fiap.postech.logistics.interfaces.dtos.DeliveryResponseDTO;
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
-import java.util.UUID;
 
 @RestController
 @RequestMapping("/deliveries")
@@ -22,7 +23,7 @@ public class DeliveryController {
     }
 
     @PostMapping
-    public ResponseEntity<DeliveryRestAdapter.DeliveryResponseDTO> create(@RequestBody DeliveryRestAdapter.DeliveryRequestDTO requestDTO) {
+    public ResponseEntity<DeliveryResponseDTO> create(@Valid @RequestBody DeliveryRequestDTO requestDTO) {
 
         var delivery = deliveryRestAdapter.toDomain(requestDTO);
         var saved = createDeliveryUseCase.execute(delivery);

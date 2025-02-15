@@ -9,7 +9,12 @@ import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Entity
-@Table(name = "deliveries")
+@Table(
+        name = "deliveries",
+        uniqueConstraints = {
+                @UniqueConstraint(name = "UK_order_id", columnNames = {"order_id"})
+        }
+)
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
@@ -20,7 +25,7 @@ public class DeliveryEntity {
     @Column(name = "id", updatable = false, nullable = false)
     private UUID id;
 
-    @Column(nullable = false)
+    @Column(name = "order_id", nullable = false)
     private UUID orderId;
 
     @Column(nullable = false)

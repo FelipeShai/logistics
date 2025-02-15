@@ -20,9 +20,12 @@ public class DeliveryJpaGateway implements DeliveryGateway {
     private final DeliveryEntityMapper mapper;
 
     public Delivery save(Delivery delivery) {
+
         logSavingDelivery(delivery.getOrderId());
-        DeliveryEntity entity = mapper.toEntity(delivery); // Remove a verificação extra
+
+        DeliveryEntity entity = mapper.toEntity(delivery);
         DeliveryEntity savedEntity = repository.save(entity);
+
         logDeliverySaved(savedEntity.getId());
         return mapper.toDomain(savedEntity);
     }
@@ -42,12 +45,6 @@ public class DeliveryJpaGateway implements DeliveryGateway {
 
     private void logSavingDelivery(UUID orderId) {
         log.info("Class={}, Method={}, Message={}", "DeliveryJpaGateway", "save", "Saving delivery with Order ID: " + orderId);
-    }
-    private void logCreatingNewEntity() {
-        log.info("Class={}, Method={}, Message={}", "DeliveryJpaGateway", "save", "No existing delivery found. Creating new entity.");
-    }
-    private void logUpdatingExistingEntity() {
-        log.info("Class={}, Method={}, Message={}", "DeliveryJpaGateway", "save", "Existing delivery found. Updating entity.");
     }
     private void logDeliverySaved(UUID id) {
         log.info("Class={}, Method={}, Message={}", "DeliveryJpaGateway", "save", "Delivery saved successfully with ID: " + id);

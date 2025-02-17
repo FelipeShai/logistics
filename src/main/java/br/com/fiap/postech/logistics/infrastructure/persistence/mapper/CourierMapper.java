@@ -3,6 +3,7 @@ package br.com.fiap.postech.logistics.infrastructure.persistence.mapper;
 import br.com.fiap.postech.logistics.domain.factory.CourierFactory;
 import br.com.fiap.postech.logistics.domain.model.Courier;
 import br.com.fiap.postech.logistics.infrastructure.persistence.entity.CourierEntity;
+import br.com.fiap.postech.logistics.interfaces.dtos.CourierResponseDTO;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -31,6 +32,15 @@ public class CourierMapper {
                 courier.getName(),
                 courier.getPhoneNumber(),
                 courier.isActive()
+        );
+    }
+
+    public CourierResponseDTO toResponse(Courier saved) {
+        return new CourierResponseDTO(
+                saved.getId(),
+                saved.getName(),
+                saved.getPhoneNumber(),
+                saved.isActive()
         );
     }
 }

@@ -27,7 +27,7 @@ public class AssignCourierUseCaseImpl implements AssignCourierUseCase {
         Delivery delivery = deliveryGateway.findById(deliveryId)
                 .orElseThrow(() -> new IllegalArgumentException("Delivery not found"));
 
-        delivery.assignCourier(courier.getId());
+        delivery.assignCourier(courier);
 
         return deliveryGateway.save(delivery);
     }

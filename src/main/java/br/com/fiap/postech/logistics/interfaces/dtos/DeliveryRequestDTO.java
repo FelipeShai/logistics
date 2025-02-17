@@ -10,5 +10,8 @@ public record DeliveryRequestDTO(
         String customerId,
 
         @NotNull(message = "Address is required")
-        DeliveryAddressDTO address
+        DeliveryAddressDTO address,
+
+//        @NotNull(message = "CourierId is required")
+        CourierRequestDTO courier
 ) {}

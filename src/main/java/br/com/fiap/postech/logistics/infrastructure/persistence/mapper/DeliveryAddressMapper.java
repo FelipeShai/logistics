@@ -47,6 +47,7 @@ public class DeliveryAddressMapper {
 
     public DeliveryAddressDTO toDTO(DeliveryAddress address) {
         return new DeliveryAddressDTO(
+                address.getId(),
                 address.getStreet(),
                 address.getNumber(),
                 address.getComplement(),

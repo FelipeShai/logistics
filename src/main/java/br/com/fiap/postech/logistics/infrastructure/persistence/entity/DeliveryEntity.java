@@ -1,5 +1,6 @@
 package br.com.fiap.postech.logistics.infrastructure.persistence.entity;
 
+import br.com.fiap.postech.logistics.domain.model.Courier;
 import br.com.fiap.postech.logistics.domain.model.DeliveryStatus;
 import jakarta.persistence.*;
 import lombok.*;
@@ -31,8 +32,9 @@ public class DeliveryEntity {
     @Column(nullable = false)
     private UUID customerId;
 
-    @Column
-    private UUID courierId;
+    @ManyToOne
+    @JoinColumn(name = "courier_id")
+    private CourierEntity courier;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
@@ -48,14 +50,14 @@ public class DeliveryEntity {
     @Column
     private LocalDateTime deliveredAt;
 
-    public static DeliveryEntity create(UUID id, UUID orderId, UUID customerId, UUID courierId,
+    public static DeliveryEntity create(UUID id, UUID orderId, UUID customerId, CourierEntity courier,
                                         DeliveryStatus status, DeliveryAddressEntity address,
                                         LocalDateTime createdAt, LocalDateTime deliveredAt) {
-        return new DeliveryEntity(id, orderId, customerId, courierId, status, address, createdAt, deliveredAt);
+        return new DeliveryEntity(id, orderId, customerId, courier, status, address, createdAt, deliveredAt);
     }
 
-    public void assignCourier(UUID courierId) {
-        this.courierId = courierId;
+    public void assignCourier(CourierEntity courier) {
+        this.courier = courier;
     }
 
     public void updateStatus(DeliveryStatus status) {

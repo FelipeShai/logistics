@@ -10,10 +10,12 @@ public class DeliveryEntityMapper {
 
     private final DeliveryFactory deliveryFactory;
     private final DeliveryAddressMapper addressMapper;
+    private final CourierMapper courierMapper;
 
-    public DeliveryEntityMapper(DeliveryFactory deliveryFactory, DeliveryAddressMapper addressMapper) {
+    public DeliveryEntityMapper(DeliveryFactory deliveryFactory, DeliveryAddressMapper addressMapper, CourierMapper courierMapper) {
         this.deliveryFactory = deliveryFactory;
         this.addressMapper = addressMapper;
+        this.courierMapper = courierMapper;
     }
 
     public Delivery toDomain(DeliveryEntity entity) {
@@ -22,7 +24,7 @@ public class DeliveryEntityMapper {
                 entity.getId(),
                 entity.getOrderId(),
                 entity.getCustomerId(),
-                entity.getCourierId(),
+                courierMapper.toDomain(entity.getCourier()),
                 entity.getStatus(),
                 addressMapper.toDomain(entity.getAddress()),
                 entity.getCreatedAt(),
@@ -36,7 +38,7 @@ public class DeliveryEntityMapper {
                 delivery.getId(),
                 delivery.getOrderId(),
                 delivery.getCustomerId(),
-                delivery.getCourierId(),
+                courierMapper.toEntity(delivery.getCourier()),
                 delivery.getStatus(),
                 addressMapper.toEntity(delivery.getAddress()),
                 delivery.getCreatedAt(),
@@ -47,7 +49,7 @@ public class DeliveryEntityMapper {
     public void updateEntityFromDomain(DeliveryEntity entity, Delivery delivery) {
         if (entity == null || delivery == null) return;
 
-        entity.assignCourier(delivery.getCourierId());
+        entity.assignCourier(courierMapper.toEntity(delivery.getCourier()));
         entity.updateStatus(delivery.getStatus());
         entity.markAsDelivered(delivery.getDeliveredAt());
 

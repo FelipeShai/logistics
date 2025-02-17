@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 public class DeliveryEntityMapper {
 
     private final DeliveryFactory deliveryFactory;
-    private final DeliveryAddressMapper addressMapper; // Injetando o novo Mapper
+    private final DeliveryAddressMapper addressMapper;
 
     public DeliveryEntityMapper(DeliveryFactory deliveryFactory, DeliveryAddressMapper addressMapper) {
         this.deliveryFactory = deliveryFactory;
@@ -33,7 +33,7 @@ public class DeliveryEntityMapper {
     public DeliveryEntity toEntity(Delivery delivery) {
         if (delivery == null) return null;
         return DeliveryEntity.create(
-                null,
+                delivery.getId(),
                 delivery.getOrderId(),
                 delivery.getCustomerId(),
                 delivery.getCourierId(),

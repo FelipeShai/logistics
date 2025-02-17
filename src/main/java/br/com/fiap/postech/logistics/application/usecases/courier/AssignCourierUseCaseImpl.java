@@ -19,7 +19,7 @@ public class AssignCourierUseCaseImpl implements AssignCourierUseCase {
         this.deliveryGateway = deliveryGateway;
     }
 
-    public Delivery execute(UUID deliveryId, UUID courierId) {
+    public Delivery execute(UUID courierId, UUID deliveryId) {
         Courier courier = courierGateway.findById(courierId)
                 .filter(Courier::isActive)
                 .orElseThrow(() -> new IllegalStateException("Courier not found or not active."));

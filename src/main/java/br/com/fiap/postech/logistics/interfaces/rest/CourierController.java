@@ -1,10 +1,15 @@
 package br.com.fiap.postech.logistics.interfaces.rest;
 
+import br.com.fiap.postech.logistics.application.usecases.courier.AssignCourierUseCase;
 import br.com.fiap.postech.logistics.application.usecases.courier.CreateCourierUseCase;
 import br.com.fiap.postech.logistics.domain.model.Courier;
+import br.com.fiap.postech.logistics.domain.model.Delivery;
 import br.com.fiap.postech.logistics.interfaces.adapters.CourierRestAdapter;
+import br.com.fiap.postech.logistics.interfaces.adapters.DeliveryRestAdapter;
 import br.com.fiap.postech.logistics.interfaces.dtos.CourierRequestDTO;
 import br.com.fiap.postech.logistics.interfaces.dtos.CourierResponseDTO;
+import br.com.fiap.postech.logistics.interfaces.dtos.DeliveryAssignmentRequest;
+import br.com.fiap.postech.logistics.interfaces.dtos.DeliveryResponseDTO;
 import br.com.fiap.postech.logistics.interfaces.gateway.database.CourierGateway;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -18,16 +23,21 @@ import java.util.UUID;
 public class CourierController {
 
     private final CourierRestAdapter courierRestAdapter;
+    private final DeliveryRestAdapter deliveryRestAdapter;
     private final CreateCourierUseCase createCourierUseCase;
+    private final AssignCourierUseCase assignCourierUseCase;
     private final CourierGateway courierGateway;
 
     public CourierController(
-            CourierRestAdapter courierRestAdapter,
+            CourierRestAdapter courierRestAdapter, DeliveryRestAdapter deliveryRestAdapter,
             CreateCourierUseCase createCourierUseCase,
+            AssignCourierUseCase assignCourierUseCase,
             CourierGateway courierGateway
     ) {
         this.courierRestAdapter = courierRestAdapter;
+        this.deliveryRestAdapter = deliveryRestAdapter;
         this.createCourierUseCase = createCourierUseCase;
+        this.assignCourierUseCase = assignCourierUseCase;
         this.courierGateway = courierGateway;
     }
 
@@ -65,5 +75,15 @@ public class CourierController {
     public ResponseEntity<Void> delete(@PathVariable UUID id) {
         courierGateway.deleteById(id);
         return ResponseEntity.noContent().build();
+    }
+
+    @PutMapping()
+    public ResponseEntity<DeliveryResponseDTO> assignCourier(@RequestBody DeliveryAssignmentRequest request) {
+
+        Delivery updated = assignCourierUseCase.execute(request.courierId(), request.deliveryId());
+
+        DeliveryResponseDTO responseDTO = deliveryRestAdapter.toResponse(updated);
+
+        return ResponseEntity.ok(responseDTO);
     }
 }

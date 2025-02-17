@@ -20,7 +20,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
-class CreateDeliveryUseCaseImplTest {
+class CreateDeliveryUseCaseTest {
 
     @Mock
     private DeliveryGateway deliveryGateway;
@@ -41,14 +41,11 @@ class CreateDeliveryUseCaseImplTest {
     @Test
     @DisplayName("Should create a new delivery when the orderId does not exist in the system.")
     void shouldCreateNewDeliveryWhenOrderIdDoesNotExist() {
-        // Arrange
         when(deliveryGateway.findByOrderId(orderId)).thenReturn(Optional.empty());
         when(deliveryGateway.save(delivery)).thenReturn(delivery);
 
-        // Act
         Delivery result = createDeliveryUseCase.execute(delivery);
 
-        // Assert
         assertNotNull(result);
         assertEquals(delivery, result);
         verify(deliveryGateway, times(1)).save(delivery);

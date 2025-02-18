@@ -13,6 +13,8 @@ public class Delivery {
     private DeliveryAddress address;
     private final LocalDateTime createdAt;
     private LocalDateTime deliveredAt;
+    private Double latitude;
+    private Double longitude;
 
     public Delivery(UUID orderId, UUID customerId, DeliveryAddress address) {
         this(null, orderId, customerId, null, DeliveryStatus.PENDING, address, null, null);
@@ -43,6 +45,8 @@ public class Delivery {
     public DeliveryStatus getStatus() { return status; }
     public LocalDateTime getCreatedAt() { return createdAt; }
     public LocalDateTime getDeliveredAt() { return deliveredAt; }
+    public Double getLatitude() { return latitude; }
+    public Double getLongitude() { return longitude; }
 
     public void assignCourier(Courier courier) {
         if (this.status != DeliveryStatus.PENDING) {
@@ -81,4 +85,11 @@ public class Delivery {
         }
     }
 
+    public void updateTracking(Double latitude, Double longitude) {
+        if (this.status == DeliveryStatus.DELIVERED) {
+            throw new IllegalStateException("Cannot update tracking for a delivered order.");
+        }
+        this.latitude = latitude;
+        this.longitude = longitude;
+    }
 }

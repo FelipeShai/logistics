@@ -1,9 +1,11 @@
 package br.com.fiap.postech.logistics.interfaces.rest;
 
+import br.com.fiap.postech.logistics.application.usecases.UpdateDeliveryStatusUseCase;
 import br.com.fiap.postech.logistics.application.usecases.delivery.CreateDeliveryUseCase;
 import br.com.fiap.postech.logistics.application.usecases.delivery.FindDeliveriesByZipUseCaseImpl;
 import br.com.fiap.postech.logistics.application.usecases.delivery.GetDeliveryByIdUseCaseImpl;
 import br.com.fiap.postech.logistics.domain.model.Delivery;
+import br.com.fiap.postech.logistics.domain.model.DeliveryStatus;
 import br.com.fiap.postech.logistics.interfaces.adapters.DeliveryRestAdapter;
 import br.com.fiap.postech.logistics.interfaces.dtos.DeliveryRequestDTO;
 import br.com.fiap.postech.logistics.interfaces.dtos.DeliveryResponseDTO;
@@ -13,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 @RestController
@@ -23,16 +26,20 @@ public class DeliveryController {
     private final CreateDeliveryUseCase createDeliveryUseCase;
     private final GetDeliveryByIdUseCaseImpl getDeliveryByIdUseCase;
     private final FindDeliveriesByZipUseCaseImpl findDeliveriesByZipUseCase;
+    private final UpdateDeliveryStatusUseCase updateDeliveryStatusUseCase;
 
     public DeliveryController(
             DeliveryRestAdapter deliveryRestAdapter,
             CreateDeliveryUseCase createDeliveryUseCase,
             GetDeliveryByIdUseCaseImpl getDeliveryByIdUseCase,
-            FindDeliveriesByZipUseCaseImpl findDeliveriesByZipUseCase) {
+            FindDeliveriesByZipUseCaseImpl findDeliveriesByZipUseCase,
+            UpdateDeliveryStatusUseCase updateDeliveryStatusUseCase
+    ) {
         this.deliveryRestAdapter = deliveryRestAdapter;
         this.createDeliveryUseCase = createDeliveryUseCase;
         this.getDeliveryByIdUseCase = getDeliveryByIdUseCase;
         this.findDeliveriesByZipUseCase = findDeliveriesByZipUseCase;
+        this.updateDeliveryStatusUseCase = updateDeliveryStatusUseCase;
     }
 
     @PostMapping
@@ -62,5 +69,12 @@ public class DeliveryController {
                 .toList();
 
         return ResponseEntity.ok(response);
+    }
+
+    @PutMapping("/{id}/status")
+    public ResponseEntity<Void> updateStatus(@PathVariable UUID id, @RequestBody Map<String, String> request) {
+        DeliveryStatus newStatus = DeliveryStatus.valueOf(request.get("status"));
+        updateDeliveryStatusUseCase.execute(id, newStatus);
+        return ResponseEntity.noContent().build();
     }
 }

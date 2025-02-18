@@ -5,7 +5,6 @@ import br.com.fiap.postech.logistics.domain.model.Courier;
 import br.com.fiap.postech.logistics.interfaces.dtos.CourierRequestDTO;
 import org.springframework.stereotype.Component;
 
-import java.util.Optional;
 import java.util.UUID;
 
 @Component

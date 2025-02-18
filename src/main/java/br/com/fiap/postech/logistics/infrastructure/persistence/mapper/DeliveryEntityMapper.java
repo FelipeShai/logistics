@@ -41,6 +41,8 @@ public class DeliveryEntityMapper {
                 courierMapper.toEntity(delivery.getCourier()),
                 delivery.getStatus(),
                 addressMapper.toEntity(delivery.getAddress()),
+                delivery.getLatitude(),
+                delivery.getLongitude(),
                 delivery.getCreatedAt(),
                 delivery.getDeliveredAt()
         );

@@ -44,16 +44,43 @@ public class DeliveryEntity {
     @JoinColumn(name = "address_id", referencedColumnName = "id", nullable = false)
     private DeliveryAddressEntity address;
 
+    @Column(name = "latitude")
+    private Double latitude;
+
+    @Column(name = "longitude")
+    private Double longitude;
+
+
     @Column(nullable = false)
     private LocalDateTime createdAt;
 
     @Column
     private LocalDateTime deliveredAt;
 
-    public static DeliveryEntity create(UUID id, UUID orderId, UUID customerId, CourierEntity courier,
-                                        DeliveryStatus status, DeliveryAddressEntity address,
-                                        LocalDateTime createdAt, LocalDateTime deliveredAt) {
-        return new DeliveryEntity(id, orderId, customerId, courier, status, address, createdAt, deliveredAt);
+    public static DeliveryEntity create(
+            UUID id,
+            UUID orderId,
+            UUID customerId,
+            CourierEntity courier,
+            DeliveryStatus status,
+            DeliveryAddressEntity address,
+            Double latitude,
+            Double longitude,
+            LocalDateTime createdAt,
+            LocalDateTime deliveredAt) {
+
+        return new DeliveryEntity(
+                id,
+                orderId,
+                customerId,
+                courier,
+                status,
+                address,
+                latitude,
+                longitude,
+                createdAt,
+                deliveredAt
+        );
     }
 
     public void assignCourier(CourierEntity courier) {

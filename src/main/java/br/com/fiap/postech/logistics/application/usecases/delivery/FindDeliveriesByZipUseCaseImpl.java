@@ -1,7 +1,6 @@
 package br.com.fiap.postech.logistics.application.usecases.delivery;
 
 import br.com.fiap.postech.logistics.domain.model.Delivery;
-import br.com.fiap.postech.logistics.domain.model.DeliveryStatus;
 import br.com.fiap.postech.logistics.infrastructure.persistence.entity.DeliveryEntity;
 import br.com.fiap.postech.logistics.infrastructure.persistence.mapper.DeliveryEntityMapper;
 import br.com.fiap.postech.logistics.interfaces.gateway.database.DeliveryGateway;
@@ -22,7 +21,7 @@ public class FindDeliveriesByZipUseCaseImpl implements FindDeliveriesByZipUseCas
 
     @Override
     public List<Delivery> execute(String zip) {
-        List<DeliveryEntity> entities = deliveryGateway.findByAddressPostalCodeAndStatus(zip, DeliveryStatus.PENDING);
+        List<DeliveryEntity> entities = deliveryGateway.findByAddressPostalCode(zip);
 
         return entities.stream()
                 .map(mapper::toDomain)

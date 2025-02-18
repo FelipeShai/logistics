@@ -14,7 +14,6 @@ import br.com.fiap.postech.logistics.interfaces.dtos.DeliveryResponseDTO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
-import java.util.Optional;
 import java.util.UUID;
 
 @Slf4j

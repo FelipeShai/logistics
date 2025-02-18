@@ -2,21 +2,21 @@ package br.com.fiap.postech.logistics.infrastructure.messaging.producer;
 
 import br.com.fiap.postech.logistics.domain.events.OrderCreatedEvent;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.kafka.core.KafkaTemplate;
+import org.springframework.cloud.stream.function.StreamBridge;
 import org.springframework.stereotype.Service;
 
 @Slf4j
 @Service
 public class KafkaProducerService {
 
-    private final KafkaTemplate<String, OrderCreatedEvent> kafkaTemplate;
+    private final StreamBridge streamBridge;
 
-    public KafkaProducerService(KafkaTemplate<String, OrderCreatedEvent> kafkaTemplate) {
-        this.kafkaTemplate = kafkaTemplate;
+    public KafkaProducerService(StreamBridge streamBridge) {
+        this.streamBridge = streamBridge;
     }
 
     public void sendOrderCreatedEvent(OrderCreatedEvent event) {
-        kafkaTemplate.send("orders.created", event);
-        log.info("Class={}, Method={}, Sending event to Kafka: {}", "KafkaProducerService", "sendOrderCreatedEvent", event);
+        streamBridge.send("orders.created", event); // Envia evento via Spring Cloud Stream
+        log.info("✅ OrderCreatedEvent enviado para Kafka: {}", event);
     }
 }

@@ -9,7 +9,7 @@ import java.util.function.Consumer;
 
 @Slf4j
 @Service
-public class KafkaConsumerServiceImpl implements KafkaConsumerService {
+public class KafkaConsumerServiceImpl {
 
     private final DeliveryEventAdapter deliveryEventRestAdapter;
 

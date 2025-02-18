@@ -1,6 +1,5 @@
 package br.com.fiap.postech.logistics.infrastructure.persistence.entity;
 
-import br.com.fiap.postech.logistics.domain.model.DeliveryAddress;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -62,5 +61,5 @@ public class DeliveryAddressEntity {
                            String district, String city, String state,
                            String country, String postalCode){
         return new DeliveryAddressEntity(id, street, number, complement, district, city, state, country, postalCode);
-    };
+    }
 }

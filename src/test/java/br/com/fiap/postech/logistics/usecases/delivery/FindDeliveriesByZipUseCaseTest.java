@@ -2,7 +2,6 @@ package br.com.fiap.postech.logistics.usecases.delivery;
 
 import br.com.fiap.postech.logistics.application.usecases.delivery.FindDeliveriesByZipUseCaseImpl;
 import br.com.fiap.postech.logistics.domain.model.Delivery;
-import br.com.fiap.postech.logistics.domain.model.DeliveryStatus;
 import br.com.fiap.postech.logistics.infrastructure.persistence.entity.DeliveryEntity;
 import br.com.fiap.postech.logistics.infrastructure.persistence.mapper.DeliveryEntityMapper;
 import br.com.fiap.postech.logistics.interfaces.gateway.database.DeliveryGateway;
@@ -41,7 +40,7 @@ class FindDeliveriesByZipUseCaseTest {
 
         List<DeliveryEntity> entities = List.of(entity);
 
-        when(deliveryGateway.findByAddressPostalCodeAndStatus(TEST_ZIP_CODE, DeliveryStatus.PENDING))
+        when(deliveryGateway.findByAddressPostalCode(TEST_ZIP_CODE))
                 .thenReturn(entities);
         when(mapper.toDomain(entity)).thenReturn(delivery);
 
@@ -52,14 +51,14 @@ class FindDeliveriesByZipUseCaseTest {
         assertEquals(1, result.size());
         assertEquals(delivery, result.get(0));
 
-        verify(deliveryGateway, times(1)).findByAddressPostalCodeAndStatus(TEST_ZIP_CODE, DeliveryStatus.PENDING);
+        verify(deliveryGateway, times(1)).findByAddressPostalCode(TEST_ZIP_CODE);
         verify(mapper, times(1)).toDomain(entity);
     }
 
     @Test
     @DisplayName("Should return an empty list when there are no pending deliveries for the given ZIP code")
     void shouldReturnEmptyListWhenNoPendingDeliveriesExistForZip() {
-        when(deliveryGateway.findByAddressPostalCodeAndStatus(TEST_ZIP_CODE, DeliveryStatus.PENDING))
+        when(deliveryGateway.findByAddressPostalCode(TEST_ZIP_CODE))
                 .thenReturn(Collections.emptyList());
 
         List<Delivery> result = findDeliveriesByZipUseCase.execute(TEST_ZIP_CODE);
@@ -67,7 +66,7 @@ class FindDeliveriesByZipUseCaseTest {
         assertNotNull(result);
         assertTrue(result.isEmpty());
 
-        verify(deliveryGateway, times(1)).findByAddressPostalCodeAndStatus(TEST_ZIP_CODE, DeliveryStatus.PENDING);
+        verify(deliveryGateway, times(1)).findByAddressPostalCode(TEST_ZIP_CODE);
         verifyNoInteractions(mapper);
     }
 }

@@ -23,8 +23,6 @@ public class DeliveryJpaGateway implements DeliveryGateway {
 
     public Delivery save(Delivery delivery) {
 
-        logSavingDelivery(delivery.getOrderId());
-
         DeliveryEntity entity = mapper.toEntity(delivery);
         DeliveryEntity savedEntity = repository.save(entity);
 
@@ -45,14 +43,11 @@ public class DeliveryJpaGateway implements DeliveryGateway {
         repository.deleteById(id);
     }
 
-    private void logSavingDelivery(UUID orderId) {
-        log.info("Class={}, Method={}, Message={}", "DeliveryJpaGateway", "save", "Saving delivery with Order ID: " + orderId);
-    }
     private void logDeliverySaved(UUID id) {
         log.info("Class={}, Method={}, Message={}", "DeliveryJpaGateway", "save", "Delivery saved successfully with ID: " + id);
     }
 
-    public List<DeliveryEntity> findByAddressPostalCodeAndStatus(String zip, DeliveryStatus status) {
-        return repository.findByAddressPostalCodeAndStatus(zip, status);
+    public List<DeliveryEntity> findByAddressPostalCode(String zip) {
+        return repository.findByAddressPostalCode(zip);
     }
 }

@@ -1,7 +1,7 @@
 package br.com.fiap.postech.logistics.controller;
 
 import br.com.fiap.postech.logistics.application.usecases.TrackingUseCase;
-import br.com.fiap.postech.logistics.interfaces.dtos.TrackingRequest;
+import br.com.fiap.postech.logistics.interfaces.dtos.TrackingRequestDTO;
 import br.com.fiap.postech.logistics.interfaces.rest.TrackingController;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
@@ -31,7 +31,7 @@ class TrackingControllerTest {
         mockMvc = MockMvcBuilders.standaloneSetup(controller).build();
 
         UUID deliveryId = UUID.randomUUID();
-        TrackingRequest request = new TrackingRequest(10.0, 20.0);
+        TrackingRequestDTO request = new TrackingRequestDTO(10.0, 20.0);
 
         mockMvc.perform(post("/tracking")
                         .param("deliveryId", deliveryId.toString())

@@ -8,7 +8,7 @@ import br.com.fiap.postech.logistics.interfaces.adapters.CourierRestAdapter;
 import br.com.fiap.postech.logistics.interfaces.adapters.DeliveryRestAdapter;
 import br.com.fiap.postech.logistics.interfaces.dtos.CourierRequestDTO;
 import br.com.fiap.postech.logistics.interfaces.dtos.CourierResponseDTO;
-import br.com.fiap.postech.logistics.interfaces.dtos.DeliveryAssignmentRequest;
+import br.com.fiap.postech.logistics.interfaces.dtos.DeliveryAssignmentDTO;
 import br.com.fiap.postech.logistics.interfaces.dtos.DeliveryResponseDTO;
 import br.com.fiap.postech.logistics.interfaces.gateway.database.CourierGateway;
 import org.springframework.http.ResponseEntity;
@@ -78,7 +78,7 @@ public class CourierController {
     }
 
     @PutMapping()
-    public ResponseEntity<DeliveryResponseDTO> assignCourier(@RequestBody DeliveryAssignmentRequest request) {
+    public ResponseEntity<DeliveryResponseDTO> assignCourier(@RequestBody DeliveryAssignmentDTO request) {
 
         Delivery updated = assignCourierUseCase.execute(request.courierId(), request.deliveryId());
 

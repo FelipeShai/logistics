@@ -12,4 +12,9 @@ public class KafkaTopicConfig {
     public NewTopic ordersCreatedTopic() {
         return TopicBuilder.name("orders.created").build();
     }
+
+    @Bean
+    public NewTopic ordersDeliveredTopic() {
+        return TopicBuilder.name("orders.delivered").build();
+    }
 }

@@ -2,4 +2,4 @@ package br.com.fiap.postech.logistics.interfaces.dtos;
 
 import java.util.UUID;
 
-public record DeliveryAssignmentRequest(UUID courierId, UUID deliveryId) { }
+public record DeliveryAssignmentDTO(UUID courierId, UUID deliveryId) { }

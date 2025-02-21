@@ -1,7 +1,7 @@
 package br.com.fiap.postech.logistics.interfaces.rest;
 
 import br.com.fiap.postech.logistics.application.usecases.TrackingUseCase;
-import br.com.fiap.postech.logistics.interfaces.dtos.TrackingRequest;
+import br.com.fiap.postech.logistics.interfaces.dtos.TrackingRequestDTO;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import lombok.RequiredArgsConstructor;
@@ -17,7 +17,7 @@ public class TrackingController {
     @PostMapping
     public ResponseEntity<Void> updateTracking(
             @RequestParam UUID deliveryId,
-            @RequestBody TrackingRequest request
+            @RequestBody TrackingRequestDTO request
     ) {
         trackingUseCase.updateLocation(deliveryId, request.latitude(), request.longitude());
         return ResponseEntity.ok().build();
